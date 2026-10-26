@@ -10,18 +10,13 @@ Primary repo for this TW: https://github.com/xzeyo/devops-flask-app
 |---|------|-------|--------|----------|
 | 1.1 | Init repo for Flask "Hello World" app, add initial code, commit to main | 1 | ✅ DONE | `devops-flask-app`, branch `main`, commit `361ac20` "simple hello world flask application for devops lab" (2026-08-03) |
 | 1.2 | Branch `feature/user-auth`, modify, commit, push branch to remote | 1.5 | ✅ DONE | Branch pushed as `features/user-auth` (plural); commit `975427c` "Added log statement when test path is called" |
-| 1.3 | Simulate conflict on main (same line), merge feature branch, resolve, push main | 1.5 | ⚠️ PARTIAL | Conflict IS set up: `main` commit `5590afe` "test" adds `print("This is a test")` on the same line the branch changed to `print("Test Path Called")`. **No merge commit exists on `main`** — merge, manual resolution and push of main still pending |
+| 1.3 | Simulate conflict on main (same line), merge feature branch, resolve, push main | 1.5 | ✅ DONE | Conflict set up on `main` @ `5590afe` "test" (`print("This is a test")`) vs branch `975427c` (`print("Test Path Called")`); merge produced a real conflict (`CONFLICT (content): hello.py`), resolved keeping the feature branch's line, merge commit `2dd5ed8` "resolved merge conflict in hello.py" pushed to `main` (2026-10-26) |
 
-Remaining work for 1.3 (on devops-flask-app):
-```
-git checkout main
-git pull origin main
-git merge features/user-auth        # will conflict in hello.py
-# edit hello.py, keep desired print line, remove <<<<<<< / ======= / >>>>>>> markers
-git add hello.py
-git commit                          # "resolved merge conflict"
-git push origin main
-```
+Resolution note (viva-ready): both branches added a `print()` inside `hello()` at the same
+spot, so git reported `UU hello.py`. Resolution kept the feature branch's line
+(`print("Test Path Called")`) since `main`'s `print("This is a test")` (commit `5590afe`,
+message "test") was the simulated conflicting change. Final graph: merge commit `2dd5ed8`
+has two parents (`5590afe` + `975427c`).
 
 ## Task 2 — Jira Project & Issue Tracking (3 Marks)
 

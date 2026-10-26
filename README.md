@@ -21,7 +21,7 @@ Legend: ✅ verified done · ⚠️ partial · 🟡 documented but no artifacts 
 |----|------|--------|----------|
 | TW1 | 1.1 init Flask repo + commit to main | ✅ | `devops-flask-app` `main` @ `361ac20` |
 | TW1 | 1.2 feature branch, commit, push | ✅ | `devops-flask-app` branch `features/user-auth` @ `975427c` (pushed) |
-| TW1 | 1.3 conflict on main → merge → resolve → push | ⚠️ | conflict set up (`main` @ `5590afe` "test" vs branch `975427c`, same line) but **no merge commit on main yet** |
+| TW1 | 1.3 conflict on main → merge → resolve → push | ✅ | real conflict on merge, resolved keeping branch's line, merge commit `2dd5ed8` pushed to `devops-flask-app` `main` (2026-10-26) |
 | TW1 | 2.1–2.3 Jira Scrum project + issues + board | ❓ | external tool, needs screenshots |
 | TW1 | 3.1 Dockerfile + build + run (port 5000) | ❌ | no Dockerfile in `devops-flask-app` |
 | TW1 | 3.2 Jenkins Freestyle + screenshot | ❌ | no Jenkins evidence |
