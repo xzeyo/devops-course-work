@@ -1,0 +1,24 @@
+TW2 1.1/1.2 — docker compose (Flask + PostgreSQL) (2026-10-26, lab box)
+
+$ docker compose up -d --build
+ Container devops-flask-app-db-1 Starting
+ Container devops-flask-app-db-1 Started
+ Container devops-flask-app-db-1 Waiting
+ Container devops-flask-app-db-1 Healthy
+ Container devops-flask-app-web-1 Starting
+ Container devops-flask-app-web-1 Started
+
+$ curl http://localhost:5000/visits
+Hello World! Stored entry #1 in PostgreSQL.
+
+$ curl http://localhost:5000/visits
+Hello World! Stored entry #2 in PostgreSQL.
+
+$ docker compose ps
+NAME                     IMAGE                  COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+devops-flask-app-db-1    postgres:16-alpine     "docker-entrypoint.s…"   db        14 seconds ago   Up 13 seconds (healthy)   5432/tcp
+devops-flask-app-web-1   devops-flask-app-web   "python hello.py"        web       13 seconds ago   Up 10 seconds             0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp
+
+$ docker compose logs db | grep 'ready to accept'
+db-1  | 2026-10-26 08:34:16.431 UTC [41] LOG:  database system is ready to accept connections
+db-1  | 2026-10-26 08:34:16.714 UTC [1] LOG:  database system is ready to accept connections

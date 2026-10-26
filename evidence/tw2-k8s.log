@@ -1,0 +1,21 @@
+=== nodes ===
+NAME                       STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION         CONTAINER-RUNTIME
+devops-lab-control-plane   Ready    control-plane   9m13s   v1.31.2   172.19.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.12.111+deb13-amd64   containerd://1.7.18
+=== TW2 2.1: make image accessible to cluster (kind load) ===
+Image: "devops-flask-app:1.0" with ID "sha256:2e759e4854590293bca8637941b856db044d3d15c8d6b566421d045e481ab943" not yet present on node "devops-lab-control-plane", loading...
+=== apply manifests ===
+deployment.apps/devops-flask-app created
+service/devops-flask-app created
+=== rollout ===
+Waiting for deployment "devops-flask-app" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "devops-flask-app" rollout to finish: 1 of 2 updated replicas are available...
+deployment "devops-flask-app" successfully rolled out
+=== pods ===
+NAME                                READY   STATUS    RESTARTS   AGE   IP           NODE                       NOMINATED NODE   READINESS GATES
+devops-flask-app-6fb4669758-dccbn   1/1     Running   0          1s    10.244.0.5   devops-lab-control-plane   <none>           <none>
+devops-flask-app-6fb4669758-tws64   1/1     Running   0          1s    10.244.0.6   devops-lab-control-plane   <none>           <none>
+=== svc ===
+NAME               TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+devops-flask-app   NodePort   10.96.233.187   <none>        5000:30080/TCP   1s
+=== TW2 2.3: access from host ===
+Hello World!

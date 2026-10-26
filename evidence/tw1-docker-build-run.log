@@ -1,0 +1,22 @@
+TW1 3.1 — Docker build + run + verify (2026-10-26, lab box, Docker 26.1.5)
+
+$ docker build -t devops-flask-app:1.0 .
+#8 [4/4] COPY hello.py .
+#8 DONE 0.1s
+#9 exporting to image
+#9 exporting layers 0.1s done
+#9 writing image sha256:2e759e4854590293bca8637941b856db044d3d15c8d6b566421d045e481ab943 done
+#9 naming to docker.io/library/devops-flask-app:1.0 done
+#9 DONE 0.2s
+
+$ docker run -d --name hello-tw1 -p 5000:5000 devops-flask-app:1.0
+5fdfd96be22981d905228f3daee801186fec455dbb16ca7523a5c265234b4da3
+
+$ curl http://localhost:5000/
+Hello World!
+
+$ docker logs hello-tw1 (full log: tw1-container-run.log)
+ * Running on http://172.17.0.2:5000
+Press CTRL+C to quit
+Test Path Called
+172.17.0.1 - - [26/Oct/2026 08:31:05] "GET / HTTP/1.1" 200 -

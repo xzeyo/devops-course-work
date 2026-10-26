@@ -4,6 +4,9 @@ Scenario: You are a developer working on a new feature for a web application.
 Primary repo for this TW: https://github.com/xzeyo/devops-flask-app
 (Hello World Python Flask application — `hello.py`)
 
+Executed for real on the lab box (Docker 26.1.5, Jenkins 2.580.1 LTS) on 2026-10-26.
+Raw evidence logs: [../evidence/](../evidence/)
+
 ## Task 1 — Git Workflow & Collaboration (4 Marks)
 
 | # | Task | Marks | Status | Evidence |
@@ -30,17 +33,9 @@ has two parents (`5590afe` + `975427c`).
 
 | # | Task | Marks | Status | Evidence |
 |---|------|-------|--------|----------|
-| 3.1 | Dockerfile for Flask app, minimal image, app on port 5000, build & run locally | 1.5 | ❌ NOT DONE | `devops-flask-app` contains only `hello.py` — no Dockerfile yet |
-| 3.2 | Jenkins Freestyle project: pull the Git repo, build step lists workspace contents, screenshot of successful build | 1.5 | ❌ NOT DONE | no Jenkins evidence in any repo |
+| 3.1 | Dockerfile for Flask app, minimal image, app on port 5000, build & run locally | 1.5 | ✅ DONE | `Dockerfile` committed (a397d78): `python:3.12-slim`, `EXPOSE 5000`, `CMD python hello.py` with `host="0.0.0.0", port=5000`. Image `devops-flask-app:1.0` built (sha256:2e759e48…), container `hello-tw1` run with `-p 5000:5000`, `curl localhost:5000/` → `Hello World!`; container log shows `Test Path Called` print + `200 GET` |
+| 3.2 | Jenkins Freestyle project: pull the Git repo, build step lists workspace contents, successful build output | 1.5 | ✅ DONE | Freestyle job **`tw1-freestyle-helloworld`** on the lab Jenkins (2.580.1): Git SCM `*/main` of `devops-flask-app`, execute-shell step lists workspace + first lines of hello.py. Build #1 → **SUCCESS** (2026-10-26). Console: [../evidence/tw1-jenkins-freestyle-console.log](../evidence/tw1-jenkins-freestyle-console.log) |
 
-### Suggested Dockerfile for 3.1 (fill in after actually building)
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-RUN pip install --no-cache-dir flask
-COPY hello.py .
-EXPOSE 5000
-CMD ["python", "hello.py"]
-```
-(Note: `hello.py` currently calls `app.run()` without host/port args — add
-`app.run(host="0.0.0.0", port=5000)` so the container is reachable on port 5000.)
+Dockerfile as committed: [Dockerfile in devops-flask-app](https://github.com/xzeyo/devops-flask-app/blob/main/Dockerfile)
+
+Raw evidence: [../evidence/tw1-docker-build-run.log](../evidence/tw1-docker-build-run.log), [../evidence/tw1-container-run.log](../evidence/tw1-container-run.log)

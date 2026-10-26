@@ -1,0 +1,145 @@
+Started by user labadmin
+Obtained Jenkinsfile from git https://github.com/xzeyo/devops-flask-app
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/tw2-declarative-pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/xzeyo/devops-flask-app
+ > git init /var/jenkins_home/workspace/tw2-declarative-pipeline # timeout=10
+Fetching upstream changes from https://github.com/xzeyo/devops-flask-app
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/xzeyo/devops-flask-app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/xzeyo/devops-flask-app # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 0136271e107faeebccac7ab0068afa48bbd21da6 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0136271e107faeebccac7ab0068afa48bbd21da6 # timeout=10
+Commit message: "TW2: docker-compose (Flask+Postgres), k8s Deployment+NodePort Service, Jenkinsfile"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/tw2-declarative-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/xzeyo/devops-flask-app # timeout=10
+Fetching upstream changes from https://github.com/xzeyo/devops-flask-app
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/xzeyo/devops-flask-app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 0136271e107faeebccac7ab0068afa48bbd21da6 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0136271e107faeebccac7ab0068afa48bbd21da6 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main 0136271e107faeebccac7ab0068afa48bbd21da6 # timeout=10
+Commit message: "TW2: docker-compose (Flask+Postgres), k8s Deployment+NodePort Service, Jenkinsfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker image)
+[Pipeline] sh
++ docker build -t devops-flask-app:pipeline-1 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  10.75kB
+Step 1/7 : FROM python:3.12-slim
+3.12-slim: Pulling from library/python
+f2be67225471: Already exists
+be6443c06d3c: Already exists
+b524bb3aba73: Already exists
+5c397e4307db: Already exists
+Digest: sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704
+Status: Downloaded newer image for python:3.12-slim
+ ---> a33c10a97f11
+Step 2/7 : WORKDIR /app
+ ---> Running in 544fa36d26ba
+ ---> Removed intermediate container 544fa36d26ba
+ ---> 87a1fdd60821
+Step 3/7 : ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ ---> Running in b95301d39bb7
+ ---> Removed intermediate container b95301d39bb7
+ ---> 733393393826
+Step 4/7 : RUN pip install --no-cache-dir flask psycopg2-binary
+ ---> Running in 8a8a7e6dda99
+Collecting flask
+  Downloading flask-3.1.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting psycopg2-binary
+  Downloading psycopg2_binary-2.9.13-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+Collecting blinker>=1.9.0 (from flask)
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting click>=8.1.3 (from flask)
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting itsdangerous>=2.2.0 (from flask)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting jinja2>=3.1.2 (from flask)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting markupsafe>=2.1.1 (from flask)
+  Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting werkzeug>=3.1.0 (from flask)
+  Downloading werkzeug-3.1.9-py3-none-any.whl.metadata (4.1 kB)
+Downloading flask-3.1.3-py3-none-any.whl (103 kB)
+Downloading psycopg2_binary-2.9.13-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 48.2 MB/s eta 0:00:00
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading werkzeug-3.1.9-py3-none-any.whl (228 kB)
+Installing collected packages: psycopg2-binary, markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, flask
+Successfully installed blinker-1.9.0 click-8.5.0 flask-3.1.3 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.4 psycopg2-binary-2.9.13 werkzeug-3.1.9
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0m[91m
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: pip install --upgrade pip
+[0m ---> Removed intermediate container 8a8a7e6dda99
+ ---> 91615eee7294
+Step 5/7 : COPY hello.py .
+ ---> b03ea6cefea0
+Step 6/7 : EXPOSE 5000
+ ---> Running in 970eb33b58f3
+ ---> Removed intermediate container 970eb33b58f3
+ ---> be5f313b70cc
+Step 7/7 : CMD ["python", "hello.py"]
+ ---> Running in 530aae74a62e
+ ---> Removed intermediate container 530aae74a62e
+ ---> bc791d7fcbae
+Successfully built bc791d7fcbae
+Successfully tagged devops-flask-app:pipeline-1
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify image)
+[Pipeline] sh
++ docker image ls devops-flask-app
++ head -5
+IMAGE                         ID             DISK USAGE   CONTENT SIZE   EXTRA
+devops-flask-app:1.0          2e759e485459        136MB             0B        
+devops-flask-app:pipeline-1   bc791d7fcbae        136MB             0B        
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

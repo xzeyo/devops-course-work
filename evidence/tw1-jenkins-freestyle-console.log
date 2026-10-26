@@ -1,0 +1,46 @@
+Started by user labadmin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/tw1-freestyle-helloworld
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/xzeyo/devops-flask-app
+ > git init /var/jenkins_home/workspace/tw1-freestyle-helloworld # timeout=10
+Fetching upstream changes from https://github.com/xzeyo/devops-flask-app
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/xzeyo/devops-flask-app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/xzeyo/devops-flask-app # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 0136271e107faeebccac7ab0068afa48bbd21da6 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0136271e107faeebccac7ab0068afa48bbd21da6 # timeout=10
+Commit message: "TW2: docker-compose (Flask+Postgres), k8s Deployment+NodePort Service, Jenkinsfile"
+First time build. Skipping changelog.
+[tw1-freestyle-helloworld] $ /bin/sh -xe /tmp/jenkins8974407631428256065.sh
++ echo == workspace contents ==
+== workspace contents ==
++ ls -la
+total 36
+drwxr-xr-x 4 jenkins jenkins 4096 Oct 26 08:40 .
+drwxr-xr-x 5 jenkins jenkins 4096 Oct 26 08:40 ..
+-rw-r--r-- 1 jenkins jenkins   56 Oct 26 08:40 .dockerignore
+drwxr-xr-x 8 jenkins jenkins 4096 Oct 26 08:40 .git
+-rw-r--r-- 1 jenkins jenkins  272 Oct 26 08:40 Dockerfile
+-rw-r--r-- 1 jenkins jenkins  575 Oct 26 08:40 Jenkinsfile
+-rw-r--r-- 1 jenkins jenkins  516 Oct 26 08:40 docker-compose.yml
+-rw-r--r-- 1 jenkins jenkins 1303 Oct 26 08:40 hello.py
+drwxr-xr-x 2 jenkins jenkins 4096 Oct 26 08:40 k8s
++ echo
+
++ echo == hello.py (first 5 lines) ==
+== hello.py (first 5 lines) ==
++ head -5 hello.py
+import os
+from flask import Flask
+
+app = Flask(__name__)
+
+Finished: SUCCESS

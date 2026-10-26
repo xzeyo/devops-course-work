@@ -4,8 +4,8 @@ Comprehensive assessment: practical lab work + project implementation + viva-voc
 
 ## A. ESE Lab Exam (10 Marks)
 
-Scenario: fully functional CI/CD pipeline for a multi-service application
-(frontend, backend, database), built from scratch.
+**Taken: morning of 2026-10-26.** Scenario: fully functional CI/CD pipeline for a
+multi-service application (frontend, backend, database), built from scratch.
 
 | Requirement | Status | Evidence |
 |-------------|--------|----------|

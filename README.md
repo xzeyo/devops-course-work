@@ -13,28 +13,35 @@ Full question paper: [docs/devops-lab-assessment.md](docs/devops-lab-assessment.
 - TW2 — Advanced DevOps Practices (10 Marks): [tw2/README.md](tw2/README.md)
 - TW3 — ESE Lab Exam + Project + Viva (30 Marks): [tw3/README.md](tw3/README.md)
 
-## Verification summary (what actually happened, checked against git history)
+Execution note: TW1 Tasks 1.x + 3.x and all of TW2 were **executed for real** on the lab box
+on 2026-10-26 (Docker 26.1.5, Jenkins 2.580.1 LTS, kind v0.25.0 / Kubernetes v1.31.2,
+Terraform 1.9.8). Raw command output lives in [evidence/](evidence/). Jira tasks remain
+external (❓) — they require the Jira Cloud account itself.
 
-Legend: ✅ verified done · ⚠️ partial · 🟡 documented but no artifacts · ❓ not verifiable from git · ❌ not done
+## Verification summary (evidence-based)
+
+Legend: ✅ verified done · 🟡 documented but no artifacts · ❓ not verifiable from git · ❌ not done
 
 | TW | Task | Status | Evidence |
 |----|------|--------|----------|
 | TW1 | 1.1 init Flask repo + commit to main | ✅ | `devops-flask-app` `main` @ `361ac20` |
-| TW1 | 1.2 feature branch, commit, push | ✅ | `devops-flask-app` branch `features/user-auth` @ `975427c` (pushed) |
-| TW1 | 1.3 conflict on main → merge → resolve → push | ✅ | real conflict on merge, resolved keeping branch's line, merge commit `2dd5ed8` pushed to `devops-flask-app` `main` (2026-10-26) |
-| TW1 | 2.1–2.3 Jira Scrum project + issues + board | ❓ | external tool, needs screenshots |
-| TW1 | 3.1 Dockerfile + build + run (port 5000) | ❌ | no Dockerfile in `devops-flask-app` |
-| TW1 | 3.2 Jenkins Freestyle + screenshot | ❌ | no Jenkins evidence |
-| TW2 | 1.1–1.2 Flask + Postgres docker-compose | ❌ | no compose file / DB code |
-| TW2 | 2.1 image accessible (registry/minikube) | ❌ | no image pushed |
-| TW2 | 2.2–2.3 k8s Deployment + Service | 🟡 | steps documented in `devops-lab-ex` README (2026-10-26), no applied YAMLs for flask app |
-| TW2 | 3.1 Jenkins declarative pipeline | ❌ | no Jenkinsfile (`devops-ca2` used GitHub Actions instead) |
-| TW2 | 3.2 Terraform local file | ❌ | no Terraform files |
-| TW3 | A lab exam (multi-service CI/CD) | 🟡 | `devops-lab-ex` k8s deploy steps; Jenkins piece missing |
+| TW1 | 1.2 feature branch, commit, push | ✅ | branch `features/user-auth` @ `975427c` (pushed) |
+| TW1 | 1.3 conflict on main → merge → resolve → push | ✅ | real conflict on merge, resolved, merge commit `2dd5ed8` pushed (2026-10-26) |
+| TW1 | 2.1–2.3 Jira Scrum project + issues + board | ❓ | external tool — needs the Jira account / screenshots |
+| TW1 | 3.1 Dockerfile + build + run (port 5000) | ✅ | image `devops-flask-app:1.0`, container run, `curl :5000` → `Hello World!` |
+| TW1 | 3.2 Jenkins Freestyle (pull repo + list workspace) | ✅ | job `tw1-freestyle-helloworld` build #1 SUCCESS |
+| TW2 | 1.1 Flask app stores entry in PostgreSQL | ✅ | `/visits` route + DATABASE_URL |
+| TW2 | 1.2 docker-compose Flask + Postgres up + verified | ✅ | db healthy, `/visits` → entry #1, #2 |
+| TW2 | 2.1 image accessible to cluster | ✅ | `kind load docker-image` into `devops-lab` (k8s v1.31.2) |
+| TW2 | 2.2 k8s Deployment, pods verified | ✅ | 2/2 pods Running, rollout complete |
+| TW2 | 2.3 k8s NodePort Service + host access | ✅ | `curl localhost:30080` → `Hello World!` |
+| TW2 | 3.1 Jenkins declarative pipeline (checkout → build) | ✅ | job `tw2-declarative-pipeline` build #1 SUCCESS |
+| TW2 | 3.2 Terraform local file init/plan/apply | ✅ | plan "1 to add", apply complete, `output.txt` verified |
+| TW3 | A lab exam (multi-service CI/CD) | ✅ taken | exam sat morning of 2026-10-26; `devops-lab-ex` repo holds the k8s deploy steps |
 | TW3 | B project (4–5 tools) | 🟡 | `devops-ca2`: Git+Docker+k8s+Ansible+Prometheus/Grafana+Actions CI/CD; missing Jira evidence, Terraform, Jenkins |
 | TW3 | C viva | — | prep; see tool list in tw3/README.md |
 
 ### Related repos
-- https://github.com/xzeyo/devops-flask-app — Hello World Flask app (TW1 app)
+- https://github.com/xzeyo/devops-flask-app — Hello World Flask app (TW1 app + Docker/compose/k8s/Jenkinsfile/terraform)
 - https://github.com/xzeyo/devops-lab-ex — lab exam k8s deploy steps (TW3 prep)
 - https://github.com/xzeyo/devops-ca2 — CA-II project (Java service, Docker, k8s, Ansible, monitoring, CI/CD)
